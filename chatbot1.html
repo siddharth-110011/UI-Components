@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      * {
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+      }
+      body {
+        margin: 0;
+      }
+      .chatbot-activate-btn {
+        height: 70px;
+        width: 70px;
+        border: 2px solid black;
+        border-radius: 50%;
+        background-color: #2196f3;
+        position: fixed;
+        bottom: 20px;
+        right: 30px;
+        transition: bottom 0.5s linear;
+        text-align: center;
+        color: white;
+      }
+      .chatbot-activate-btn:hover {
+        opacity: 0.8;
+        cursor: pointer;
+      }
+      .chatbot-window {
+        height: 90vh;
+        width: 350px;
+        border-radius: 5px;
+        margin-left: 5px;
+        border: 1px solid black;
+        position: fixed;
+        bottom: -90vh;
+        right: 50px;
+        transition: bottom 0.5s linear;
+      }
+
+      .chatbot-header {
+        display: flex;
+        height: 16%;
+        text-align: center;
+        background-color: rgb(203, 74, 203);
+        color: white;
+        border-radius: 5px 5px 0 0;
+        padding: 0.5rem;
+        font-size: 20px;
+        font-weight: bold;
+      }
+      .chatbot-message-display {
+        padding: 5px;
+        border: 1px solid black;
+        height: calc(68% - 10px);
+        margin: 5px;
+        overflow-y: auto;
+      }
+      .chatbot-query-panel {
+        display: flex;
+        border: 1px solid black;
+        margin: 5px;
+        /* height: calc(20% - 10px); */
+        padding: 5px 0;
+        justify-content: space-evenly;
+      }
+      .chatbot-query-box {
+        width: 80%;
+      }
+      .chatbot-send-btn {
+        align-self: center;
+      }
+      .chatbot-send-btn > input[type="submit"] {
+        background-color: blue;
+        color: white;
+        height: 50px;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      .chatbot-send-btn > input[type="submit"]:hover {
+        opacity: 0.7;
+      }
+      .chatbot-header-txt {
+        width: 90%;
+      }
+
+      .close-btn {
+        width: 10%;
+        cursor: pointer;
+      }
+      .chatbot-msg-block,
+      .user-msg-block {
+        padding: 8px;
+        border-radius: 4px;
+        width: 160px;
+        margin-bottom: 10px;
+      }
+      .chatbot-msg-block {
+        float: left;
+        clear: left;
+        background-color: #e06767;
+        color: greenyellow;
+      }
+      .user-msg-block {
+        float: right;
+        clear: both;
+        background-color: rgb(34, 157, 34);
+        color: white;
+      }
+
+      .chatbot-msg-time,
+      .user-msg-time {
+        float: right;
+      }
+
+      @media screen and (max-width: 400px) {
+        .chatbot-window {
+          width: 70vw;
+        }
+      }
+
+      .logo {
+        display: inline-block;
+        padding: 0 25px;
+        height: 50px;
+        width: 50px;
+        font-size: 16px;
+        line-height: 50px;
+        border-radius: 25px;
+        background-color: #f1f1f1;
+      }
+      .logo > .chip {
+        width: 50px;
+        height: 50px;
+        margin: 0 10px 0 -25px;
+      }
+      .heading {
+        text-align: center;
+        animation: glow 1s ease-in-out infinite alternate;
+        background-color: black;
+        margin-top: 0;
+        color: white;
+        height: 50px;
+      }
+      @-webkit-keyframes glow {
+        from {
+          text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px yellow,
+            0 0 40px orange, 0 0 50px goldenrod, 0 0 60px #e60073, 0 0 70px red;
+        }
+
+        to {
+          text-shadow: 0 0 20px #fff, 0 0 30px #ff4da6, 0 0 40px #ff4da6,
+            0 0 50px #ff4da6, 0 0 60px #ff4da6, 0 0 70px #ff4da6,
+            0 0 80px #ff4da6;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h1 class="heading">Chatbot UI</h1>
+    <div class="chatbot-activate-btn" onclick="hideChatbotActivateBtn(this)">
+      <p>Click here</p>
+    </div>
+    <div class="chatbot-window">
+      <div class="chatbot-header">
+        <div class="logo">
+          <img
+            class="chip"
+            src="https://cdn.pixabay.com/photo/2014/04/03/11/55/robot-312566_640.png"
+          />
+        </div>
+        <div class="chatbot-header-txt">ChatBot</div>
+        <div class="close-btn" onclick="closeWindow()">X</div>
+      </div>
+      <div class="chatbot-message-display">
+        <div class="chatbot-msg-block">
+          <div class="chatbot-msg-txt">
+            How can I help you? How can I help you? How can I help you?
+          </div>
+          <div class="chatbot-msg-time">7:35 AM</div>
+        </div>
+      </div>
+      <div class="chatbot-query-panel">
+        <textarea class="chatbot-query-box"></textarea>
+        <div class="chatbot-send-btn">
+          <input type="submit" value="Send" onclick="sendUserMsg()" />
+        </div>
+      </div>
+    </div>
+  </body>
+  <script>
+    function hideChatbotActivateBtn(el) {
+      el.style.bottom = "-70px";
+      setTimeout(() => {
+        showChatbotWindow();
+      }, 500);
+    }
+    function showChatbotWindow() {
+      let chatWindow = document.getElementsByClassName("chatbot-window")[0];
+      chatWindow.style.bottom = "30px";
+    }
+    function closeWindow() {
+      let chatWindow = document.getElementsByClassName("chatbot-window")[0];
+      chatWindow.style.bottom = "-90vh";
+      setTimeout(() => {
+        showChatbotActivateBtn();
+      }, 500);
+    }
+    function showChatbotActivateBtn() {
+      let chatbotActivateBtn = document.getElementsByClassName(
+        "chatbot-activate-btn"
+      )[0];
+      chatbotActivateBtn.style.bottom = "20px";
+    }
+    function sendUserMsg() {
+      let date = new Date();
+      let hours = date.getHours();
+      let minutes = date.getMinutes();
+      let ampm = hours >= 12 ? "PM" : "AM";
+      let messageDisplay = document.getElementsByClassName(
+        "chatbot-message-display"
+      )[0];
+      let userMsgBlock = document.createElement("div");
+      let userMsgTextContainer = document.createElement("div");
+      let userMsgTimeContainer = document.createElement("div");
+
+      let userMsgText =
+        document.getElementsByClassName("chatbot-query-box")[0].value;
+      let userMsg = document.createTextNode(userMsgText);
+
+      userMsgTextContainer.appendChild(userMsg);
+      let userMsgTime = document.createTextNode(
+        hours + ":" + minutes + " " + ampm
+      );
+      userMsgTimeContainer.appendChild(userMsgTime);
+
+      userMsgBlock.appendChild(userMsgTextContainer);
+      userMsgBlock.appendChild(userMsgTimeContainer);
+
+      userMsgTextContainer.className = "user-msg-text";
+      userMsgTimeContainer.className = "user-msg-time";
+      userMsgBlock.className = "user-msg-block";
+
+      messageDisplay.appendChild(userMsgBlock);
+      document.getElementsByClassName("chatbot-query-box")[0].value = "";
+    }
+  </script>
+</html>
