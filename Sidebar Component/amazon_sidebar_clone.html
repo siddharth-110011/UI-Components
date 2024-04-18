@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="./style.css"></link>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+  <body>
+    <div class="page-main-heading">
+      <h1>Responsive Sidebar</h1>
+    </div>
+    <div class="container">
+      <div class="main-heading"><h2>Hello, sign in</h2></div>
+      <div>
+        <ul class="menu" data-menu-id="1">
+          <li>
+            <div class="menu-items-title">Trending</div>
+          </li>
+          <li class="menu-item">
+            <a href="#"><span class="item-text">Best Seller</span> </a>
+          </li>
+          <li class="menu-item">
+            <a href="#"><span class="item-text">New Releases</span> </a>
+          </li>
+          <li class="menu-item">
+            <a href="#"><span class="item-text">Movers and Shakers</span> </a>
+          </li>
+          <li>
+            <div class="menu-items-title">Digital Content And Devices</div>
+          </li>
+          <li class="menu-item" data-menu-id="2" onClick="changeMenu(this)">
+            <a href="#">
+              <span class="item-text">Echo & Alexa</span>
+              <i class="arrow-next"></i>
+            </a>
+          </li>
+          <li class="menu-item">
+            <a href="#">
+              <span class="item-text">Fire TV</span>
+              <i class="arrow-next"></i>
+            </a>
+          </li>
+          <li class="menu-item">
+            <a href="#">
+              <span class="item-text">Kindle E-Readers & Ebooks</span>
+              <i class="arrow-next"></i
+            ></a>
+          </li>
+          <li class="menu-item">
+            <a href="#">
+              <span class="item-text">Audible-Audio-Book</span>
+              <i class="arrow-next"></i
+            ></a>
+          </li>
+          <li class="menu-item">
+            <a href="#">
+              <span class="item-text">Amazon Prime Video</span>
+              <i class="arrow-next"></i
+            ></a>
+          </li>
+          <li class="menu-item">
+            <a href="#">
+              <span class="item-text">Amazon Prime Music</span>
+              <i class="arrow-next"></i
+            ></a>
+          </li>
+          <li>
+            <div class="menu-items-title">Shop By Category</div>
+          </li>
+          <li class="menu-item">
+            <a href="#">
+              <span class="item-text">Mobiles, Computers</span>
+              <i class="arrow-next"></i
+            ></a>
+          </li>
+          <li class="menu-item">
+            <a href="#">
+              <span class="item-text">TV, Appliances, Electronics</span>
+              <i class="arrow-next"></i
+            ></a>
+          </li>
+          <li class="menu-item">
+            <a href="#">
+              <span class="item-text">Men's Fashion</span>
+              <i class="arrow-next"></i
+            ></a>
+          </li>
+          <li class="menu-item">
+            <a href="#">
+              <span class="item-text">Women's Fashion</span>
+              <i class="arrow-next"></i
+            ></a>
+          </li>
+        </ul>
+        <ul class="menu" data-menu-id="2">
+          <li class="menu-back-btn" data-menu-id="1" onclick="changeMenu(this)">
+            <a href="#">
+              <span class="arrow-prev">&#129128;</span>
+              <span>MAIN MENU</span>
+            </a>
+          </li>
+          <li>
+            <div class="menu-items-title">Echo & Alexa</div>
+          </li>
+          <li class="menu-item">
+            <a href="#"
+              ><span class="item-text">See all devices with Alexa</span></a
+            >
+          </li>
+          <li>
+            <div class="menu-items-title">Content & Resources</div>
+          </li>
+          <li class="menu-item">
+            <a href="#"><span class="item-text">Meet Alexa</span></a>
+          </li>
+          <li class="menu-item">
+            <a href="#"><span class="item-text">Alexa Skills</span></a>
+          </li>
+          <li class="menu-item">
+            <a href="#"><span class="item-text">Alexa App</span></a>
+          </li>
+          <li class="menu-item">
+            <a href="#"><span class="item-text">Alexa Smart Home</span></a>
+          </li>
+          <li class="menu-item">
+            <a href="#"><span class="item-text">Amazon Prime Music</span></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <script>
+      // Hiding the current menu and showing the specified one.
+      function changeMenu(menuItem) {
+        let menu = menuItem.closest("ul");
+
+        let targetMenuId = menuItem.getAttribute("data-menu-id");
+        let currentMenuId = menu.getAttribute("data-menu-id");
+
+        document.getElementsByClassName("container")[0].scrollTop = 0;
+
+        // Hiding the current visible menu.
+        if (currentMenuId === "1") {
+          menu.style.right = "350px";
+        } else {
+          menu.style.left = "350px";
+        }
+
+        // Showing the target menu
+        if (targetMenuId === "1") {
+          sidebarMenus[targetMenuId - 1].style.right = "0";
+        } else {
+          sidebarMenus[targetMenuId - 1].style.left = "0";
+        }
+
+        // menu.style.display = "none";
+        // sidebarMenus[targetMenuId-1].style.display = "initial";
+
+        // sidebarMenus[targetMenuId-1].style.left="0";
+      }
+      // Getting all the sidebar menus.
+      let sidebarMenus = document.getElementsByClassName("menu");
+
+      // Hiding all menues except the first one.
+      for (let i = 1; i < sidebarMenus.length; i++) {
+        // sidebarMenus[i].style.display="none";
+
+        sidebarMenus[i].style.left = "350px";
+      }
+    </script>
+  </body>
+</html>
